@@ -1,10 +1,14 @@
 package com.preapm.agent.util;
 
+import com.preapm.agent.weave.impl.AroundInterceptorCollector;
+
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.URLDecoder;
 
 public class ClassLoaderUtil {
 
@@ -54,8 +58,17 @@ public class ClassLoaderUtil {
 			}
 		}
 	}
+
+	public static String getJARPath() {
+		String decode = AroundInterceptorCollector.class.getProtectionDomain()
+				.getCodeSource().getLocation().getFile();
+
+		return decode.substring(0,decode.lastIndexOf("/"));
+	}
 	
-	public static void main(String[] args) {
-		  loadJar("C:\\eclipse-workspace\\test\\target");
+	public static void main(String[] args) throws UnsupportedEncodingException {
+//		  loadJar("C:\\eclipse-workspace\\test\\target");
+		System.out.println(getJARPath());
+
 	}
 }

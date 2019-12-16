@@ -37,6 +37,8 @@ public class APMAgent implements ClassFileTransformer {
 		}
 
 		className = className.replaceAll("/", ".");
+
+		System.out.println("=============" + className);
 		if (!collector.isTarget(className)) {
 			return null;
 		}
@@ -61,6 +63,8 @@ public class APMAgent implements ClassFileTransformer {
 			new Exception(String.format("%s APM agent insert fail", new Object[] { className }), localThrowable)
 					.printStackTrace();
 		}
+
+
 		return null;
 	}
 }

@@ -7,11 +7,15 @@ import javassist.CtClass;
 public abstract class Collector {
 
 	public boolean isTarget(String className, String method) {
-		return PreApmConfigUtil.isTarget(className, method);
+		boolean target = PreApmConfigUtil.isTarget(className, method);
+
+		System.out.println(target + method);
+		return target;
 	}
 
 	public boolean isTarget(String className) {
-		return PreApmConfigUtil.isTarget(className);
+		boolean target = PreApmConfigUtil.isTarget(className);
+		return target;
 	}
 
 	public abstract byte[] transform(ClassLoader classLoader, String className, byte[] classfileBuffer,

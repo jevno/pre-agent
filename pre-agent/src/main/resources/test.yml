@@ -1,0 +1,17 @@
+#target:
+#  set:
+#    com.preapm.agent.Bootstrap:
+#      value: com.preapm.agent.Bootstrap.print(java.lang.String,java.lang.String),com.preapm.agent.Bootstrap.print(java.lang.String)
+#
+#    com.alibaba.druid.pool.DruidDataSource:
+#      value: com.alibaba.druid.pool.DruidDataSource.getConnection(java.lang.String, java.lang.String),com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(long),com.alibaba.druid.pool.DruidDataSource.getConnection(long)
+#
+
+target:
+  set:
+    execution(public * com.preapm.agent.*.*(..)):
+      includeMethods: com.preapm.agent.Bootstrap.print(java.lang.String,java.lang.String)--com.preapm.agent.Bootstrap.print(java.lang.String)
+#      excludeMethods: com.preapm.agent.Bootstrap.print(java.lang.String,java.lang.String),com.preapm.agent.Bootstrap.print(java.lang.String)
+
+#    com.alibaba.druid.pool.DruidDataSource:
+#      value: com.alibaba.druid.pool.DruidDataSource.getConnection(java.lang.String, java.lang.String),com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(long),com.alibaba.druid.pool.DruidDataSource.getConnection(long)

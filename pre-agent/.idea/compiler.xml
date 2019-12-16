@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="pre-agent" />
+        <module name="pre-agent-common" />
+        <module name="pre-demo-plugin" />
+        <module name="pre-sleuth-plugin" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="pre-agent" target="1.8" />
+      <module name="pre-agent-common" target="1.8" />
+      <module name="pre-demo-plugin" target="1.8" />
+      <module name="pre-sleuth-plugin" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="pre-agent" options="-nowarn -parameters" />
+      <module name="pre-agent-common" options="-nowarn -parameters" />
+      <module name="pre-demo-plugin" options="-nowarn -parameters" />
+      <module name="pre-sleuth-plugin" options="-nowarn -parameters" />
+    </option>
+  </component>
+</project>
