@@ -19,7 +19,14 @@ public class ClassLoaderUtil {
 		// 获取所有的.jar和.zip文件
 		File[] jarFiles = libPath.listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
-				return name.endsWith(".jar") || name.endsWith(".zip");
+				if(name.endsWith(".jar") || name.endsWith(".zip")){
+					String jarName = name.substring(0, name.lastIndexOf("."));
+					if(PreApmConfigUtil.isTargetJar(jarName)){
+						return true;
+					}
+				}
+
+				return false;
 			}
 		});
 

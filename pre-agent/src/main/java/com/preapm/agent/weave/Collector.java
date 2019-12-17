@@ -12,8 +12,8 @@ public abstract class Collector {
 		return target;
 	}
 
-	public boolean isTarget(String methodFullName) {
-		boolean target = PreApmConfigUtil.isTarget(methodFullName);
+	public boolean isTarget(String className) {
+		boolean target = PreApmConfigUtil.isTarget(className);
 		return target;
 	}
 

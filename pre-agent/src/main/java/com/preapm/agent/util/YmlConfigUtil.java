@@ -65,42 +65,6 @@ public class YmlConfigUtil {
     }
 
 
-    public static List<AopExpressBean> getAopExpressBeanList() throws Exception {
-
-        YmlConfigUtil.loadYml("test.yml");
-        LinkedHashMap value = (LinkedHashMap) YmlConfigUtil.getValue("target:set");
-
-        ArrayList<AopExpressBean> aopExpressBeans = new ArrayList<>();
-
-        value.keySet().forEach(key ->{
-            try {
-                AopExpressBean aopExpressBean = new AopExpressBean();
-                String includeStr = "target:set" + ":" + key + ":includeMethods";
-
-                String includeMethodsStr = (String) YmlConfigUtil.getValue(includeStr);
-                String[] includeMethodArr = includeMethodsStr.split(",");
-                Set<String> includeMethodSet = new LinkedHashSet<>();
-                for (int i = 0; i < includeMethodArr.length; i++) {
-                    includeMethodSet.add(includeMethodArr[i]);
-                }
-
-                String excludeStr = "target:set" + ":" + key + ":excludeMethods";
-                String excludeMethodsStr = (String) YmlConfigUtil.getValue(excludeStr);
-                String[] excludeMethodsArr = excludeMethodsStr.split(",");
-                Set<String> excludeMethodSet = new LinkedHashSet<>();
-                for (int i = 0; i < excludeMethodsArr.length; i++) {
-                    excludeMethodSet.add(excludeMethodsArr[i]);
-                }
-                aopExpressBean.setIncludeMethods(includeMethodSet);
-                aopExpressBean.setExcludeMethods(excludeMethodSet);
-                aopExpressBeans.add(aopExpressBean);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        return aopExpressBeans;
-    }
 
 
     public static void main(String[] args) throws Exception {

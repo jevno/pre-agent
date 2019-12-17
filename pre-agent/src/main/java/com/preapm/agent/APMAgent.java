@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
+import com.preapm.agent.util.ClassLoaderUtil;
 import com.preapm.agent.util.LogManager;
 import com.preapm.agent.weave.Collector;
 import com.preapm.agent.weave.impl.AroundInterceptorCollector;
@@ -37,6 +38,11 @@ public class APMAgent implements ClassFileTransformer {
 		}
 
 		className = className.replaceAll("/", ".");
+
+		String jarPath = ClassLoaderUtil.getJARPath();
+		System.out.println("当前jar包路径" + jarPath);
+		// 加载插件后，初始化插件
+		ClassLoaderUtil.loadJar(jarPath);
 
 		System.out.println("=============" + className);
 //		if (!collector.isTarget(className)) {

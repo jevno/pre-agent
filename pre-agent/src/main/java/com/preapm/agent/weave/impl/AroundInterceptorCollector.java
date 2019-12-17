@@ -28,10 +28,6 @@ public class AroundInterceptorCollector extends Collector {
 	@Override
 	public byte[] transform(ClassLoader classLoader, String className, byte[] classfileBuffer, CtClass ctClass) {
 		try {
-			String jarPath = ClassLoaderUtil.getJARPath();
-			System.out.println("当前jar包路径" + jarPath);
-			// 加载插件后，初始化插件
-			ClassLoaderUtil.loadJar(jarPath);
 
 			ClassReplacer replacer = new ClassReplacer(className, classLoader, ctClass);
 			for (CtMethod ctMethod : ctClass.getDeclaredMethods()) {
