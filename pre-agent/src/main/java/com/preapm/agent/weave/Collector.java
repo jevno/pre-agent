@@ -9,14 +9,14 @@ public abstract class Collector {
 	public boolean isTarget(String className, String method) {
 		boolean target = PreApmConfigUtil.isTarget(className, method);
 
-		System.out.println(target + method);
 		return target;
 	}
 
-	public boolean isTarget(String className) {
-		boolean target = PreApmConfigUtil.isTarget(className);
+	public boolean isTarget(String methodFullName) {
+		boolean target = PreApmConfigUtil.isTarget(methodFullName);
 		return target;
 	}
+
 
 	public abstract byte[] transform(ClassLoader classLoader, String className, byte[] classfileBuffer,
 			CtClass ctClass);

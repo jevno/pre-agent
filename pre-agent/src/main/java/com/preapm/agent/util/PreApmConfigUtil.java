@@ -1,14 +1,15 @@
 package com.preapm.agent.util;
 
-import com.preapm.agent.bean.AopExpressBean;
-import com.preapm.agent.weave.parser.ProxyPointcut;
+import com.preapm.agent.weave.pattern.JdkRegexpMethodPointcut;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.*;
+import java.util.regex.Pattern;
 
 public class PreApmConfigUtil {
 	
-	private static Map<String, ProxyPointcut> targetMap = new HashMap<>();
+//	private static Map<String, String> targetMap = new HashMap<>();
+
+	private static JdkRegexpMethodPointcut jdkRegexp = new JdkRegexpMethodPointcut();
 
 	static {
 		try {
@@ -18,50 +19,33 @@ public class PreApmConfigUtil {
 		}
 	}
 
-	public static void initYmlConfig() throws Exception {
+	private static void initYmlConfig() throws Exception {
 		YmlConfigUtil.loadYml("test.yml");
-		LinkedHashMap<String,String> value = (LinkedHashMap) YmlConfigUtil.getValue("target:set");
-		Set<String> keys = value.keySet();
-		for (String key: keys) {
+		String patternsStr = (String)YmlConfigUtil.getValue("target:list:patterns");
+		String excludedPatternsStr = (String)YmlConfigUtil.getValue("target:list:excludedPatterns");
 
-			AopExpressBean aopExpressBean = new AopExpressBean();
-			String includeStr = "target:set" + ":" + key + ":includeMethods";
-			String includeMethodsStr = (String) YmlConfigUtil.getValue(includeStr);
-			Set<String> includeMethodSet = new LinkedHashSet<>();
-			if (!StringUtils.isEmpty(includeMethodsStr)){
-				String[] includeMethodArr = includeMethodsStr.split("--");
-				for (int i = 0; i < includeMethodArr.length; i++) {
-					includeMethodSet.add(includeMethodArr[i]);
-				}
+		if(!StringUtils.isEmpty(patternsStr)){
+			String[] patterns = patternsStr.split(",");
+			jdkRegexp.setPatterns(patterns);
+			Pattern[] patternsArr = new Pattern[patterns.length];
+
+			for (int i = 0; i < patterns.length; i++) {
+				patternsArr[i] = Pattern.compile(patterns[0]);
 			}
 
-			String excludeStr = "target:set" + ":" + key + ":excludeMethods";
-			String excludeMethodsStr = (String) YmlConfigUtil.getValue(excludeStr);
-			Set<String> excludeMethodSet = new LinkedHashSet<>();
-			if (!StringUtils.isEmpty(excludeMethodsStr)){
-				String[] excludeMethodsArr = excludeMethodsStr.split("--");
-				for (int i = 0; i < excludeMethodsArr.length; i++) {
-					excludeMethodSet.add(excludeMethodsArr[i]);
-				}
-			}
-
-			aopExpressBean.setIncludeMethods(includeMethodSet);
-			aopExpressBean.setExcludeMethods(excludeMethodSet);
-
-			Set<String> set = new HashSet<String>();
-			set.addAll(includeMethodSet);
-			set.retainAll(excludeMethodSet);
-			if(set.size() > 0){
-				throw new Exception("same method in includeMethodSet and excludeMethodSet");
-			}
-
-			ProxyPointcut proxyPointcut = new ProxyPointcut();
-			proxyPointcut.setExpression(key);
-			proxyPointcut.setAopExpressBean(aopExpressBean);
-
-			targetMap.put(key,proxyPointcut);
+			jdkRegexp.setCompiledPatterns(patternsArr);
 		}
 
+		if(!StringUtils.isEmpty(excludedPatternsStr)){
+			String[] excludedPatterns = excludedPatternsStr.split(",");
+			jdkRegexp.setExcludedPatterns(excludedPatterns);
+			Pattern[] excludedPatternsArr = new Pattern[excludedPatterns.length];
+
+			for (int i = 0; i < excludedPatterns.length; i++) {
+				excludedPatternsArr[i] = Pattern.compile(excludedPatterns[0]);
+			}
+			jdkRegexp.setCompiledExclusionPatterns(excludedPatternsArr);
+		}
 
 	}
 
@@ -72,41 +56,21 @@ public class PreApmConfigUtil {
 			return flag;
 		}
 
-		Collection<ProxyPointcut> values = targetMap.values();
-		for (ProxyPointcut value : values) {
-			AopExpressBean aopExpressBean = value.getAopExpressBean();
-			Set<String> includeMethods = aopExpressBean.getIncludeMethods();
-
-			Set<String> excludeMethods = aopExpressBean.getExcludeMethods();
-
-			//拦截所有方法
-			if(includeMethods.size() == 0 && excludeMethods.size() == 0){
-				return true;
-			}
-
-			if(includeMethods.contains(method)){
-				return true;
-			}
-			if(excludeMethods.contains(method)){
-				return false;
-			}
-		}
-
 		return flag;
 	}
 
-	public static boolean isTarget(String className) {
-		Collection<ProxyPointcut> values = targetMap.values();
-		for (ProxyPointcut value : values) {
-			if(value.matches(className)){
-				return true;
-			}else {
-				return false;
-			}
-		}
-		return false;
+	public static boolean isTarget(String methodFullName) {
+		return jdkRegexp.matchesPattern(methodFullName);
 	}
-	
+
+
+	public static void main(String[] args) throws Exception {
+		initYmlConfig();
+		boolean b = jdkRegexp.matchesPattern("com.preapm.agent.Bootstrap.print");
+
+		System.out.println(b);
+
+	}
 	
 	
 

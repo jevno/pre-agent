@@ -39,9 +39,9 @@ public class APMAgent implements ClassFileTransformer {
 		className = className.replaceAll("/", ".");
 
 		System.out.println("=============" + className);
-		if (!collector.isTarget(className)) {
-			return null;
-		}
+//		if (!collector.isTarget(className)) {
+//			return null;
+//		}
 
 		// 不同的ClassLoader使用不同的ClassPool
 		ClassPool localClassPool;
