@@ -12,7 +12,7 @@ public class Test {
         JdkRegexpMethodPointcut pointcut = new JdkRegexpMethodPointcut();
         String[] strings = new String[1];
 
-        strings[0] = "com.preapm.agent.*.print.*";
+        strings[0] = "public java.lang.String com.preapm.agent.Bootstrap.print\\(java.lang.String\\)";
 
 
         pointcut.setPatterns(strings);

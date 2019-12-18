@@ -34,7 +34,7 @@ public class AroundInterceptorCollector extends Collector {
 //				String longName = ctMethod.getLongName();
 				String name = ctMethod.getMethodInfo().getName();
 				if ((Modifier.isPublic(ctMethod.getModifiers())) && (!Modifier.isStatic(ctMethod.getModifiers())
-						&& (!Modifier.isNative(ctMethod.getModifiers()))) && isTarget(className + "." + name)) {
+						&& (!Modifier.isNative(ctMethod.getModifiers()))) && isTarget(className , name)) {
 					ClassWrapper classWrapper = new ClassWrapperAroundInterceptor();
 					classWrapper.beginSrc(beginSrc);
 					classWrapper.endSrc(endSrc);

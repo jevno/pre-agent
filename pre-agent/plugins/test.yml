@@ -1,0 +1,11 @@
+
+target:
+  list:
+    patterns: com.preapm.agent.Bootstrap.print
+#    excludedPatterns: com.preapm.agent.Bootstrap.print(java.lang.String,java.lang.String),com.preapm.agent.Bootstrap.print(java.lang.String)
+    excludedPatterns:
+
+
+
+#    com.alibaba.druid.pool.DruidDataSource:
+#      value: com.alibaba.druid.pool.DruidDataSource.getConnection(java.lang.String, java.lang.String),com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(long),com.alibaba.druid.pool.DruidDataSource.getConnection(long)

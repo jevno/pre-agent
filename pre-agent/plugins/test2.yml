@@ -1,0 +1,58 @@
+plugins:
+  #插件得名称.jar包的名称
+  pre-demo-plugin:
+    #加载jar包得条件，如加载到哪个类(类的全路径)的时候触发加载这个插件包，多个类之间是或的关系
+    loadPatterns:
+      -
+      -
+      -
+    #自定义的名称，可以配置多个
+    appName:
+      #插件织入匹配方法路径，支持正则表达式
+      patterns:
+        - com.preapm.agent.Bootstrap.print1
+        - com.preapm.agent.Bootstrap.print1
+      #排除匹配路径
+      excludedPatterns:
+
+    mysql:
+        #插件织入匹配方法路径，支持正则表达式
+      patterns:
+        - com.preapm.agent.Bootstrap.print1
+        - com.preapm.agent.Bootstrap.print1
+      #排除匹配路径
+      excludedPatterns:
+
+
+
+
+
+  #插件得名称.jar包的名称
+#  pre-zikpin-plugin:
+#    #加载jar包得条件，如加载到哪个类(类的全路径)的时候触发加载这个插件包，多个类之间是或的关系
+#    loadPatterns:
+#      -
+#      -
+#      -
+#    #自定义的名称，可以配置多个
+#    appName:
+#      #插件织入匹配方法路径，支持正则表达式
+#      patterns:
+#        - com.preapm.agent.Bootstrap.print
+#        - com.preapm.agent.Bootstrap.print
+#      #排除匹配路径
+#      excludedPatterns:
+#
+#    mysql:
+#      #插件织入匹配方法路径，支持正则表达式
+#      patterns:
+#        - com.preapm.agent.Bootstrap.print
+#        - com.preapm.agent.Bootstrap.print
+#      #排除匹配路径
+#      excludedPatterns:
+
+
+
+
+
+
